@@ -1,0 +1,215 @@
+/** CSS @ Rules **/
+
+@font-face {
+    font-family: "DM Sans";
+    src:
+        url("../assets/DMSans-Regular.woff2") format("woff2"),
+        url("../assets/DMSans-Regular.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@view-transition {
+    navigation: auto;
+}
+
+/** CSS Variables **/
+
+:root {
+    --background-color: linear-gradient(45deg, rgb(0, 0, 0) 0%, rgb(69, 69, 96) 100%);
+    --text-color: #ffffff;
+    --primary-color: #a9ffff;
+    --accent-color: #ff0045;
+    --shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --background-color: linear-gradient(20deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 80%, rgb(69, 255, 169) 100%);
+        --text-color: #000000;
+        --primary-color: #ff00a9;
+        --accent-color: #45ffa9;
+    }
+}
+
+/** Global Styles **/
+
+* {
+    font-family: "DM Sans", system-ui, Arial, Helvetica, sans-serif;
+    font-size: 1.05rem;
+    line-height: 2;
+
+    /* Reset default browser styles */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh;
+    background: var(--background-color, #1c1c1c);
+    color: var(--text-color, #ffffff);
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h2 {
+    font-size: 2rem;
+    margin: 1.5rem 0;
+}
+
+h3 {
+    font-size: 2rem;
+    margin: 1.5rem 0;
+}
+
+h4 {
+    margin-block: 1rem;
+
+    &::before {
+        content: "- ";
+        color: var(--primary-color, #a9ffff);
+    }
+
+    &::after {
+        content: " -";
+        color: var(--primary-color, #a9ffff);
+    }
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-weight: bold;
+    line-height: 1;
+}
+
+ul,
+ol {
+    padding-left: 2rem;
+    list-style-position: inside;
+}
+
+a {
+    transition: background-color 1s ease, color 1s ease;
+    background-color: transparent;
+    color: var(--primary-color, #a9ffff);
+
+    &:hover {
+        transition: background-color 0s, color 0s;
+        background-color: var(--accent-color, #ff0045);
+        color: var(--text-color, #ffffff);
+    }
+}
+
+a[href*="http"]::after {
+    content: " ↗";
+    font-size: 0.8rem;
+    vertical-align: super;
+}
+
+header {
+    border-block-end: 1px dashed var(--text-color, #ffffff);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    max-width: 768px;
+    padding: 1rem 0;
+
+    a {
+        display: flex;
+        text-decoration: none;
+        padding: 0.25rem;
+        border-radius: 8px;
+    }
+
+    #logo {
+        transition: transform 0.2s ease;
+
+        &:hover {
+            transform: rotate(10deg);
+        }
+    }
+
+    ul {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        li {
+            list-style: none;
+        }
+    }
+}
+
+.active {
+    background-color: var(--accent-color, transparent);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    height: 100%;
+    margin: 0 auto;
+    max-width: 768px;
+    width: 100%;
+    padding: 0 1rem;
+    padding-block-end: 2rem;
+
+    p {
+        margin: 0.5rem 0;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+    }
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0.5rem;
+    border-top: 1px dashed var(--text-color, #ffffff);
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #2a2a33;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color, #baffe7);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-color, #ff0059);
+}
+
+@media screen and (max-width: 768px) {
+    nav {
+        margin: 0 1rem;
+
+        ul {
+            flex-wrap: wrap;
+        }
+    }
+}
