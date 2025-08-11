@@ -14,6 +14,6 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          cd {{ secrets.PRODUCTION_FOLDER }}
+          cd ${{ secrets.PRODUCTION_FOLDER }}
           ${{ secrets.SCRIPT }}
           sudo systemctl restart apache2
