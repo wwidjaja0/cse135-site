@@ -16,4 +16,3 @@ jobs:
         script: |
           cd ${{ secrets.PRODUCTION_FOLDER }}
           ${{ secrets.SCRIPT }}
-          sudo systemctl restart apache2
