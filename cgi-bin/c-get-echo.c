@@ -11,6 +11,9 @@ int main(int argc, char **argv, char **envp)
 	<body><h1 align=center>GET query string</h1>\
   	<hr/>\n");
 
+  printf("<p style=\"background-color: yellow;\">William Widjaja</p>");
+  printf("<br />");
+
   // Get and format query string
   printf("Raw query string: %s\n<br/><br/>", getenv("QUERY_STRING"));
   printf("<table> Formatted Query String:");

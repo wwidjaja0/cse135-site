@@ -10,12 +10,15 @@ int main(int argc, char **argv, char **envp)
 	<body><h1 align=center>Environment Variables</h1> \
   	<hr/>\n");
 
+  printf("<p style=\"background-color: yellow;\">William Widjaja</p>");
+  printf("<br />");
+
   for (char **env = envp; *env != 0; env++)
   {
     char *thisEnv = *env;
     printf("%s\n<br/>", thisEnv);
   }
-
+  
   // print HTML footer
   printf("</body></html>");
   return 0;

@@ -11,6 +11,9 @@ int main(int argc, char **argv, char **envp)
 	<body><h1 align=center>General Request Echo</h1> \
   	<hr/>\n");
 
+  printf("<p style=\"background-color: yellow;\">William Widjaja</p>");
+  printf("<br />");
+
   // Get environment vars
   printf("<table>\n");
   printf("<tr><td>Protocol:</td><td>%s</td></tr>\n", getenv("SERVER_PROTOCOL"));

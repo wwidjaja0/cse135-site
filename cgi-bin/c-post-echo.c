@@ -11,6 +11,9 @@ int main(int argc, char **argv, char **envp)
 	<body><h1 align=center>POST Message Body</h1>\
   	<hr/>\n");
 
+  printf("<p style=\"background-color: yellow;\">William Widjaja</p>");
+  printf("<br />");
+
   printf("Message Body: %s\n<br/>", fgets(str, 1000, stdin));
 
   // Print HTML footer

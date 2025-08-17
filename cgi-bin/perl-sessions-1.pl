@@ -24,6 +24,9 @@ print "<body>";
 
 print "<h1>Perl Sessions Page 1</h1>";
 
+print("<p style=\"background-color: yellow;\">William Widjaja</p>");
+print("<br />");
+
 if ($name){
 	print("<p><b>Name:</b> $name");
 }else{

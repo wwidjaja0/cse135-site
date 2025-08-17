@@ -28,6 +28,9 @@ if (length ($form_data) > 0){
   }
 }
 
+print("<p style=\"background-color: yellow;\">William Widjaja</p>");
+print("<br />");
+
 print "<b>Message Body:</b><br />\n";
 print "<ul>\n";
 

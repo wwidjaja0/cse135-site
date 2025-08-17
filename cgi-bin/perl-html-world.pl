@@ -8,7 +8,9 @@ print "<title>Hello, Perl!</title>";
 print "</head>";
 print "<body>";
 
-print "<h1>William Widjaja was here - Hello, Perl!</h1>";
+print "<h1>Hello, Perl!</h1>";
+print("<p style=\"background-color: yellow;\">William Widjaja</p>");
+print("<br />");
 print "<p>This page was generated with the Perl programming langauge</p>";
 
 $date = localtime();

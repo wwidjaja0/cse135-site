@@ -10,6 +10,9 @@ print <<END;
 <hr>
 END
 
+print("<p style=\"background-color: yellow;\">William Widjaja</p>");
+print("<br />");
+
 # The Query String is simply an environment variable
 print "<b>Query String:</b> $ENV{QUERY_STRING}<br />\n";
 

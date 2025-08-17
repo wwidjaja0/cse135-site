@@ -10,6 +10,9 @@ print <<END;
 <hr>
 END
 
+print("<p style=\"background-color: yellow;\">William Widjaja</p>");
+print("<br />");
+
 # HTTP Protocol, HTTP Method, and the Query String are all environment variables
 print "<p><b>HTTP Protocol:</b> $ENV{SERVER_PROTOCOL}</p>";
 print "<p><b>HTTP Method:</b> $ENV{REQUEST_METHOD}</p>";

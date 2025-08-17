@@ -34,6 +34,10 @@ int main(int argc, char **argv, char **envp)
   printf("<head><title>C Sessions</title></head>\n");
   printf("<body>");
   printf("<h1>C Sessions Page 1</h1>");
+
+  printf("<p style=\"background-color: yellow;\">William Widjaja</p>");
+  printf("<br />");
+
   printf("<table>");
 
   // First check for new Cookie, then Check for old Cookie

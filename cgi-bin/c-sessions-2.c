@@ -13,6 +13,10 @@ int main(int argc, char **argv, char **envp)
   printf("<head><title>C Sessions</title></head>\n");
   printf("<body>");
   printf("<h1>C Sessions Page 2</h1>");
+
+  printf("<p style=\"background-color: yellow;\">William Widjaja</p>");
+  printf("<br />");
+
   printf("<table>");
 
   if (getenv("HTTP_COOKIE") != NULL && strcmp(getenv("HTTP_COOKIE"), "destroyed"))
