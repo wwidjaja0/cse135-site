@@ -1,31 +1,44 @@
-# Homework 1
+# Homework READMEs
 
-## Team
+## Table of Contents
+
+- [Homework 1](#homework-1)
+- [Homework 2](#homework-2)
+
+## Homework 1
+
+### Team
 
 - William Widjaja
 
-## Grader Credentials
-```
+### Grader Credentials
+
+```bash
 user: grader
 pass: cSEe-1355?grad3r
 ```
 
-## Link To My Site
+### Link To My Site
+
 <https://cse135-wwidjaja.online/>
 
-## GitHub Auto Deploy
+### GitHub Auto Deploy
+
 <https://youtu.be/42t3M-6ESvE>
 
-## Site Login Credentials
-```
+### Site Login Credentials
+
+```bash
 user: grader
 pw: !cse135EASY
 ```
 
-## After Compression Changes
+### After Compression Changes
+
 Transferred bytes is less than the total bytes of the original resources as I get the value of `gzip` in the Content-Encoding response header.
 
-## Summary of Removing 'Server' Header
+### Summary of Removing 'Server' Header
+
 I used the `security2` plugin provided by the ModSecurity module to remove the 'Server' header from the response. This is done by adding a rule in the Apache configuration file.
 
 initial-index.jpg - default Apache2 page to prove Apache is working
@@ -63,3 +76,52 @@ log-verification.jpg - showing you know where your log files are
 
 report-verification.jpg - GoAccess screen capture
 ![report-verification](https://github.com/user-attachments/assets/b541462f-6b1c-4dfe-ad8a-1fd387358029)
+
+## Homework 2
+
+Team Members: William Widjaja
+IP: 164.90.157.84
+
+```bash
+user: grader
+pass: cSEe-1355?grad3r
+```
+
+### Links to My Site
+
+<https://cse135-wwidjaja.online/>
+
+Perl
+
+- <https://cse135-wwidjaja.online/cgi-bin/perl-html-world.pl>
+- <https://cse135-wwidjaja.online/cgi-bin/perl-json-world.pl>
+- <https://cse135-wwidjaja.online/cgi-bin/perl-env.pl>
+- <https://cse135-wwidjaja.online/cgi-bin/perl-env-pm.pl>
+- <https://cse135-wwidjaja.online/cgi-bin/perl-get-echo.pl>
+- <https://cse135-wwidjaja.online/cgi-bin/perl-post-echo.pl>
+- <https://cse135-wwidjaja.online/cgi-bin/perl-general-echo.pl>
+- <https://cse135-wwidjaja.online/hw2/perl-cgiform.html>
+
+C
+
+- <https://cse135-wwidjaja.online/cgi-bin/c-hello-html-world.cgi>
+- <https://cse135-wwidjaja.online/cgi-bin/c-hello-json-world.cgi>
+- <https://cse135-wwidjaja.online/cgi-bin/c-env.cgi>
+- <https://cse135-wwidjaja.online/cgi-bin/c-get-echo.cgi>
+- <https://cse135-wwidjaja.online/cgi-bin/c-post-echo.cgi>
+- <https://cse135-wwidjaja.online/cgi-bin/c-general-echo.cgi>
+- <https://cse135-wwidjaja.online/hw2/c-cgiform.html>
+
+Rust
+
+- <https://cse135-wwidjaja.online/cgi-bin/hello.rs>
+
+Go
+
+- <https://cse135-wwidjaja.online/cgi-bin/hello.go>
+
+Additional Notes:
+
+```text
+N/A
+```
