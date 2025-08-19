@@ -5,7 +5,7 @@ use std::time::SystemTime;
 
 fn main () {
     println!("Cache-Control: no-cache\n");
-    println!("Content-Type: text/html\n\n");
+    println!("Content-type: text/html\n\n");
 
     let content_length = env::var("CONTENT_LENGTH").ok()
         .and_then(|v| v.parse::<usize>().ok())

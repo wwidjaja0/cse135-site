@@ -5,7 +5,7 @@ use std::time::SystemTime;
 
 fn main () {
     println!("Cache-Control: no-cache\n");
-    println!("Content-Type: application/json\n\n");
+    println!("Content-type: application/json\n\n");
 
     let content_length = env::var("CONTENT_LENGTH").ok()
         .and_then(|v| v.parse::<usize>().ok())
