@@ -3,7 +3,7 @@
 version = 4
 
 [[package]]
-name = "rust-general-echo"
+name = "rust-general-request-echo"
 version = "0.1.0"
 dependencies = [
  "urlencoding",
