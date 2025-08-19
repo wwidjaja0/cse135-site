@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/cgi"
-	"os"
 	"time"
 )
 
@@ -13,8 +12,8 @@ func main() {
 		w.Header().Set("Cache-Control", "no-cache")
 		w.Header().Set("Content-type", "text/html")
 
-		now := time.Now()
-		ip := os.Getenv("REMOTE_ADDR")
+		now := time.Now().Format(time.RFC3339)
+		ip := r.RemoteAddr
 
 		fmt.Fprint(w, "<html><body>")
 		fmt.Fprint(w, "<h1>Hello, Go!</h1>")
@@ -22,6 +21,7 @@ func main() {
 		fmt.Fprint(w, "<br />")
 		fmt.Fprint(w, "<p>This page was generated with the Go programming langauge</p>")
 		fmt.Fprintf(w, "Current Time: %s", now)
+		fmt.Fprint(w, "<br />")
 		fmt.Fprintf(w, "Your IP Address: %s", ip)
 		fmt.Fprint(w, "</body></html>")
 	}))

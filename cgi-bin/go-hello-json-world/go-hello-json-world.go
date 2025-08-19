@@ -1,19 +1,37 @@
 package main
 
 import (
-	"fmt"
+	"encoding/json"
 	"net/http"
 	"net/http/cgi"
+	"time"
 )
+
+type Payload struct {
+	Title   string `json:"title"`
+	Heading string `json:"heading"`
+	Author  string `json:"author"`
+	Message string `json:"message"`
+	Time    string `json:"time"`
+	IP      string `json:"ip"`
+}
 
 func main() {
 	cgi.Serve(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "text/html; charset=utf-8")
-		fmt.Fprint(w, "<html><body>")
-		fmt.Fprint(w, "<h1>Hello from Go CGI!</h1>")
-		if err := r.ParseForm(); err == nil {
-			fmt.Fprintf(w, "<p>Received data: %v</p>", r.Form)
+		payload := Payload{
+			Title:   "Example JSON Output",
+			Heading: "Hello from Go CGI",
+			Author:  "William Widjaja",
+			Message: "This is a JSON response",
+			Time:    time.Now().Format(time.RFC3339),
+			IP:      r.RemoteAddr,
 		}
-		fmt.Fprint(w, "</body></html>")
+
+		w.Header().Set("Cache-Control", "no-cache")
+		w.Header().Set("Content-Type", "application/json")
+
+		if err := json.NewEncoder(w).Encode(payload); err != nil {
+			http.Error(w, "Failed to encode JSON", http.StatusInternalServerError)
+		}
 	}))
 }
