@@ -5,7 +5,7 @@ use serde_json::json;
 
 fn main () {
     println!("Cache-Control: no-cache");
-    println!("Content-type: text/html");
+    println!("Content-type: application/json");
     println!();
 
     let ip = env::var("REMOTE_ADDR").ok().unwrap_or("unknown".to_string());
