@@ -1,27 +1,19 @@
 use std::env;
-use std::io::{self, Read};
 use chrono::{DateTime, Local};
 use std::time::SystemTime;
+use serde_json::json;
 
 fn main () {
-    println!("Cache-Control: no-cache\n");
-    println!("Content-type: application/json\n\n");
-
-    let content_length = env::var("CONTENT_LENGTH").ok()
-        .and_then(|v| v.parse::<usize>().ok())
-        .unwrap_or(0);
-
-    let mut input = String::new();
-    io::stdin().take(content_length as u64).read_to_string(&mut input).unwrap();
+    println!("Cache-Control: no-cache");
+    println!("Content-type: text/html");
+    println!();
 
     let ip = env::var("REMOTE_ADDR").ok().unwrap_or("unknown".to_string());
     let now = SystemTime::now();
     let datetime: DateTime<Local> = DateTime::<Local>::from(now);
     let formatted_datetime = datetime.format("%Y-%m-%d %H:%M:%S").to_string();
 
-    println!("<html><body>");
-    println!("<h1>Hello World from Rust</h1>");
-    println!("This program was generated at: {}\n<br/>", formatted_datetime);
-    println!("Your current IP address is: {}<br/>", ip);
-    println!("</body></html>");
+    let message = json!({"title":"Hello, Rust!", "heading":"Hello, Rust!", "author":"William Widjaja", "message":"This page was generated with the Rust programming language", "time":formatted_datetime, "IP":ip});
+
+    println!("{}", serde_json::to_string_pretty(&message).unwrap())
 }
