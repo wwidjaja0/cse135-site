@@ -7,10 +7,9 @@ echo "🔧 Building C files..."
 for cfile in c/*.c; do
     [[ -f "$cfile" ]] || continue
     base=$(basename "$cfile" .c)
-    outfile="${cfile}.cgi"
+    outfile="${base}.cgi"
     echo "  🔹 Compiling $cfile -> $outfile"
-    srcdir=$(dirname "$cfile")
-    (cd "$srcdir" && gcc -o "../$outfile" "$(basename "$cfile")")
+    gcc -o "$outfile" "$cfile"
 done
 
 echo "🦀 Building Rust files..."
