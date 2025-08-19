@@ -19,10 +19,10 @@ type Payload struct {
 func main() {
 	cgi.Serve(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		payload := Payload{
-			Title:   "Example JSON Output",
-			Heading: "Hello from Go CGI",
+			Title:   "Hello, Go!",
+			Heading: "Hello, Go!",
 			Author:  "William Widjaja",
-			Message: "This is a JSON response",
+			Message: "This page was generated with the Go programming language",
 			Time:    time.Now().Format(time.RFC3339),
 			IP:      r.RemoteAddr,
 		}
