@@ -4,8 +4,9 @@ use chrono::{DateTime, Local};
 use std::time::SystemTime;
 
 fn main () {
-    println!("Cache-Control: no-cache\n");
-    println!("Content-type: text/html\n\n");
+    println!("Cache-Control: no-cache");
+    println!("Content-type: text/html");
+    println!();
 
     let content_length = env::var("CONTENT_LENGTH").ok()
         .and_then(|v| v.parse::<usize>().ok())
