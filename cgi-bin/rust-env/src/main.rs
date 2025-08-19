@@ -10,7 +10,7 @@ fn main() {
     println!("<br />");
 
     for (key, value) in env::vars() {
-        println!("{}: {}", key, value);
+        println!("{}: {}<br />", key, value);
     }
 
     println!("</body></html>");
