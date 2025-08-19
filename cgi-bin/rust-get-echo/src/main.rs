@@ -3,13 +3,18 @@ use std::env;
 use urlencoding::decode;
 
 fn main() {
-    // Print required CGI headers
     println!("Cache-Control: no-cache");
     println!("Content-type: text/html");
-    println!(); // Blank line to separate headers from body
+    println!();
+
+    println!("<html><head><title>GET Request Echo</title></head>
+    <body><h1 align="center">Get Request Echo</h1><hr />");
+    println!("<p style=\"background-color: yellow;\">William Widjaja</p>");
+    println!("<br />");
 
     // Get the query string from the environment
     let query = env::var("QUERY_STRING").unwrap_or_default();
+    println!("<b>Query String:</b> {}<br />\n", &query);
 
     // Parse the query string into key-value pairs
     let params: HashMap<_, _> = query
@@ -21,10 +26,6 @@ fn main() {
             Some((decode(key).ok()?, decode(value).ok()?))
         })
         .collect();
-
-    // Output HTML
-    println!("<html><body>");
-    println!("<h1>Parsed Query Parameters</h1>");
 
     if params.is_empty() {
         println!("<p><em>No query parameters were provided.</em></p>");
