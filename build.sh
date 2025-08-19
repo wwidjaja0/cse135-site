@@ -4,19 +4,30 @@
 cd "$(dirname "$0")/cgi-bin" || exit 1
 
 echo "🔧 Building C files..."
-for cfile in *.c; do
+for cfile in c/*.c; do
     [[ -f "$cfile" ]] || continue
-    outfile="${cfile%.c}.cgi"
+    base=$(basename "$cfile" .c)
+    outfile="${cfile}.cgi"
     echo "  🔹 Compiling $cfile -> $outfile"
-    gcc -o "$outfile" "$cfile"
+    srcdir=$(dirname "$cfile")
+    (cd "$srcdir" && gcc -o "../$outfile" "$(basename "$cfile")")
 done
 
 echo "🦀 Building Rust files..."
-for rsfile in *.rs; do
-    [[ -f "$rsfile" ]] || continue
-    outfile="${rsfile%.rs}.cgi"
-    echo "  🔹 Compiling $rsfile -> $outfile"
-    rustc -o "$outfile" "$rsfile"
+find . -mindepth 2 -maxdepth 2 -name Cargo.toml | while read -r cargo_file; do
+    project_dir=$(dirname "$cargo_file")
+    project_name=$(basename "$project_dir")
+    output_binary="${project_name}.cgi"
+
+    echo "🔧 Building $project_name..."
+
+    # Build the Cargo project
+    cargo build --release --manifest-path "$cargo_file"
+
+    # Copy the compiled binary up to cgi-bin/
+    cp "$project_dir/target/release/$project_name" "$output_binary"
+    chmod +x "$output_binary"
+    echo "✅ Built $output_binary"
 done
 
 echo "🐹 Building Go files..."
