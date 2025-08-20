@@ -85,7 +85,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Fprint(w, "<br/><br/>")
-	fmt.Fprint(w, `<a href="/hw2/perl-cgiform.html">Go CGI Form</a><br/>`)
+	fmt.Fprint(w, `<a href="/hw2/go-cgiform.html">Go CGI Form</a><br/>`)
 	fmt.Fprint(w, `<form style="margin-top:30px" action="/cgi-bin/go-destroy-session.cgi" method="get">`)
 	fmt.Fprint(w, `<button type="submit">Destroy Session</button>`)
 	fmt.Fprint(w, "</form>")
