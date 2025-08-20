@@ -38,7 +38,10 @@ fn get_session_file_path(session_id: &str) -> PathBuf {
 
 fn read_session_username(session_id: &str) -> Option<String> {
     let path = get_session_file_path(session_id);
-    fs::read_to_string(path).ok()
+    fs::read_to_string(path)
+        .ok()
+        .map(|s| s.trim().to_string())
+        .filter(|s| !s.is_empty())
 }
 
 fn write_session_username(session_id: &str, username: &str) {
@@ -53,7 +56,12 @@ fn parse_username_from_post() -> Option<String> {
     for pair in buf.split('&') {
         if let Some((k, v)) = pair.split_once('=') {
             if k == "username" {
-                return Some(decode(v).ok()?.into_owned());
+                let decoded = decode(v).ok()?.into_owned();
+                let trimmed = decoded.trim().to_string();
+                if trimmed.is_empty() {
+                    return None;
+                }
+                return Some(trimmed);
             }
         }
     }
@@ -73,10 +81,13 @@ fn main() {
         .is_none();
 
     let mut username = if method.eq_ignore_ascii_case("POST") {
-        parse_username_from_post().map(|u| {
+        // Only update the stored username if a non-empty value was provided
+        if let Some(u) = parse_username_from_post() {
             write_session_username(&session_id, &u);
-            u
-        })
+            Some(u)
+        } else {
+            None
+        }
     } else {
         None
     };
@@ -95,9 +106,12 @@ fn main() {
     println!("<h1>Rust Sessions Page 1</h1>");
     println!("<p style=\"background-color: yellow;\">William Widjaja</p><br/>");
 
+    // Display the cookie (session id) value used for this request
+    println!("<p><b>Cookie:</b> {}={}</p>", COOKIE_NAME, session_id);
+
     match username {
-        Some(ref name) => println!("<p><b>Name:</b> {}</p>", name),
-        None => println!("<p><b>Name:</b> You do not have a name set</p>"),
+        Some(ref name) if !name.trim().is_empty() => println!("<p><b>Name:</b> {}</p>", name),
+        _ => println!("<p><b>Name:</b> You do not have a name set</p>"),
     }
 
     println!("<br/><br/>");
