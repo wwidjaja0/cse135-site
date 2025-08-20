@@ -40,7 +40,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "<body>")
 	fmt.Fprint(w, "<h1>Session Destroyed</h1>")
 	fmt.Fprint(w, `<p style="background-color: yellow;">William Widjaja</p><br/>`)
-	fmt.Fprint(w, `<a href="/hw2/perl-cgiform.html">Back to the Perl CGI Form</a><br/>`)
+	fmt.Fprint(w, `<a href="/hw2/go-cgiform.html">Back to the Go CGI Form</a><br/>`)
 	fmt.Fprint(w, `<a href="/cgi-bin/go-session.cgi">Back to Page 1</a><br/>`)
 	fmt.Fprint(w, "</body></html>")
 }
