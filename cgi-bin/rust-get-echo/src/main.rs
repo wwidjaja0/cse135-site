@@ -12,11 +12,9 @@ fn main() {
     println!("<p style=\"background-color: yellow;\">William Widjaja</p>");
     println!("<br />");
 
-    // Get the query string from the environment
     let query = env::var("QUERY_STRING").unwrap_or_default();
     println!("<b>Query String:</b> {}<br />\n", &query);
 
-    // Parse the query string into key-value pairs
     let params: HashMap<_, _> = query
         .split('&')
         .filter_map(|pair| {

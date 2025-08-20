@@ -12,13 +12,11 @@ fn main() {
     println!("<p style=\"background-color: yellow;\">William Widjaja</p>");
     println!("<br />");
 
-    // Read the CONTENT_LENGTH environment variable
     let content_length = env::var("CONTENT_LENGTH")
         .ok()
         .and_then(|v| v.parse::<usize>().ok())
         .unwrap_or(0);
 
-    // Read the POST body from stdin
     let mut body = String::new();
     if content_length > 0 {
         io::stdin()
@@ -27,14 +25,12 @@ fn main() {
             .unwrap_or(0);
     }
 
-    // Show raw body or (null)
     if body.trim().is_empty() {
         println!("<b>Message Body:</b> (null)<br />");
     } else {
         println!("<b>Message Body:</b> {}<br />", body);
     }
 
-    // Decode and parse body like query string
     let params: Vec<(&str, &str)> = body
         .split('&')
         .filter_map(|pair| {
