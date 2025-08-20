@@ -6,14 +6,18 @@ import (
 	"net/http/cgi"
 	"os"
 	"path/filepath"
+	"time"
 )
 
-const sessionDir = "/tmp"
+const (
+	sessionDir = "/tmp"
+	cookieName = "CGISESSID"
+)
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	// Get session ID from cookie or param
 	var sid string
-	if cookie, err := r.Cookie("SITE_SID"); err == nil {
+	if cookie, err := r.Cookie(cookieName); err == nil {
 		sid = cookie.Value
 	} else {
 		sid = r.FormValue("sid")
@@ -24,12 +28,13 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		sessionFile := filepath.Join(sessionDir, "gosession_"+sid)
 		_ = os.Remove(sessionFile)
 
-		// Expire cookie
+		// Expire cookie (MaxAge<0 deletes; add past Expires for compatibility)
 		http.SetCookie(w, &http.Cookie{
-			Name:   "SITE_SID",
-			Value:  "",
-			Path:   "/",
-			MaxAge: -1,
+			Name:    cookieName,
+			Value:   "",
+			Path:    "/",
+			MaxAge:  -1,
+			Expires: time.Unix(0, 0),
 		})
 	}
 

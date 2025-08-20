@@ -12,7 +12,10 @@ import (
 	"strings"
 )
 
-const sessionDir = "/tmp"
+const (
+	sessionDir = "/tmp"
+	cookieName = "CGISESSID"
+)
 
 // Generate a random session ID
 func newSessionID() string {
@@ -27,13 +30,13 @@ func getSession(w http.ResponseWriter, r *http.Request) (string, map[string]stri
 	var cookie *http.Cookie
 	var err error
 
-	if cookie, err = r.Cookie("CGISESSID"); err == nil {
+	if cookie, err = r.Cookie(cookieName); err == nil {
 		sid = cookie.Value
 	}
 
 	if sid == "" {
 		sid = newSessionID()
-		http.SetCookie(w, &http.Cookie{Name: "CGISESSID", Value: sid, Path: "/"})
+		http.SetCookie(w, &http.Cookie{Name: cookieName, Value: sid, Path: "/"})
 	}
 
 	sessionFile := filepath.Join(sessionDir, "gosession_"+sid)
@@ -77,6 +80,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "<body>")
 	fmt.Fprint(w, "<h1>Go Sessions Page</h1>")
 	fmt.Fprint(w, `<p style="background-color: yellow;">William Widjaja</p><br/>`)
+
+	// Display the cookie (session id)
+	fmt.Fprintf(w, "<p><b>Cookie:</b> %s=%s</p>", html.EscapeString(cookieName), html.EscapeString(sid))
 
 	if name != "" {
 		fmt.Fprintf(w, "<p><b>Name:</b> %s</p>", html.EscapeString(name))
