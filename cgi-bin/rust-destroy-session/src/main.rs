@@ -45,6 +45,6 @@ fn main() {
     println!("<h1>Session Destroyed</h1>");
     println!("<p style=\"background-color: yellow;\">William Widjaja</p>");
     println!("<p>Your session has been deleted.</p>");
-    println!("<a href=\"/cgi-bin/rust-sessions.cgi\">Start New Session</a>");
+    println!("<a href=\"/cgi-bin/rust-session.cgi\">Start New Session</a>");
     println!("</body></html>");
 }

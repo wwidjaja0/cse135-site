@@ -135,5 +135,5 @@ Go
 Additional Notes:
 
 ```text
-N/A
+In order to test sessioning, go back to the main session Form and then click "Test Sessioning" again. The existing session should be used, and the session ID should not change until destroyed.
 ```

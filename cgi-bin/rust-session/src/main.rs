@@ -87,7 +87,7 @@ fn main() {
 
     println!("Cache-Control: no-cache");
     if is_new_session {
-        println!("Set-Cookie: {}={}", COOKIE_NAME, session_id);
+        println!("Set-Cookie: {}={}; Path=/", COOKIE_NAME, session_id);
     }
     println!("Content-type: text/html\n");
 
@@ -101,7 +101,6 @@ fn main() {
     }
 
     println!("<br/><br/>");
-    println!("<a href=\"/cgi-bin/rust-sessions-2.cgi\">Session Page 2</a><br/>");
     println!("<a href=\"/hw2/rust-cgiform.html\">Rust CGI Form</a><br/>");
 
     println!("<form style=\"margin-top:30px\" action=\"/cgi-bin/rust-destroy-session.cgi\" method=\"get\">");
