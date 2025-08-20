@@ -81,7 +81,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "<h1>Go Sessions Page</h1>")
 	fmt.Fprint(w, `<p style="background-color: yellow;">William Widjaja</p><br/>`)
 
-	// Display the cookie (session id)
 	fmt.Fprintf(w, "<p><b>Cookie:</b> %s=%s</p>", html.EscapeString(cookieName), html.EscapeString(sid))
 
 	if name != "" {

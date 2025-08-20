@@ -15,7 +15,6 @@ const (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	// Get session ID from cookie or param
 	var sid string
 	if cookie, err := r.Cookie(cookieName); err == nil {
 		sid = cookie.Value
@@ -28,7 +27,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		sessionFile := filepath.Join(sessionDir, "gosession_"+sid)
 		_ = os.Remove(sessionFile)
 
-		// Expire cookie (MaxAge<0 deletes; add past Expires for compatibility)
+		// Also clear the cookie
 		http.SetCookie(w, &http.Cookie{
 			Name:    cookieName,
 			Value:   "",
@@ -38,7 +37,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		})
 	}
 
-	// Print HTML response
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprint(w, "<html>")
 	fmt.Fprint(w, "<head><title>Go Session Destroyed</title></head>")
