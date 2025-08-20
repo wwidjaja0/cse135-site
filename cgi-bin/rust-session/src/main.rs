@@ -6,6 +6,7 @@ use std::{
 };
 use rand::{distributions::Alphanumeric, Rng};
 use urlencoding::decode;
+use cookie::{Cookie, CookieJar, ParseError};
 
 const SESSION_DIR: &str = "/tmp";
 const COOKIE_NAME: &str = "CGISESSID";
@@ -18,12 +19,14 @@ fn generate_session_id() -> String {
         .collect()
 }
 
-fn get_cookie_value(cookies: &str, name: &str) -> Option<String> {
-    for cookie in cookies.split(';') {
-        let trimmed = cookie.trim();
-        if let Some((k, v)) = trimmed.split_once('=') {
-            if k == name {
-                return Some(v.to_string());
+fn get_cookie_value(header: &str, name: &str) -> Option<String> {
+    // The cookie crate parses individual cookie strings; split on ';' and try each
+    for kv in header.split(';') {
+        let s = kv.trim();
+        if s.is_empty() { continue; }
+        if let Ok(parsed) = Cookie::parse(s) {
+            if parsed.name() == name {
+                return Some(parsed.value().to_string());
             }
         }
     }
@@ -53,6 +56,14 @@ fn write_session_username(session_id: &str, username: &str) {
     let _ = fs::write(path, username);
 }
 
+fn touch_session(session_id: &str) {
+    // Ensure a session file exists even if no username is set yet
+    let path = get_session_file_path(session_id);
+    if !path.exists() {
+        let _ = fs::write(path, "");
+    }
+}
+
 fn parse_username_from_post() -> Option<String> {
     let content_length = env::var("CONTENT_LENGTH").ok()?.parse::<usize>().ok()?;
     let mut buf = String::new();
@@ -75,13 +86,23 @@ fn parse_username_from_post() -> Option<String> {
 fn main() {
     let method = env::var("REQUEST_METHOD").unwrap_or_default();
 
-    // Determine session id: if cookie present and valid (file exists), use it; otherwise generate new
+    // Determine session id: if cookie present and looks valid, use it; otherwise generate new
     let raw_cookie = env::var("HTTP_COOKIE").ok();
-    let mut session_id = raw_cookie
+    let cookie_id = raw_cookie
         .as_deref()
         .and_then(|c| get_cookie_value(c, COOKIE_NAME))
-        .filter(|id| session_exists(id))
-        .unwrap_or_else(generate_session_id);
+        .map(|s| s.trim().to_string())
+        .filter(|s| !s.is_empty() && s != "destroyed");
+
+    let session_id = match cookie_id {
+        Some(id) => id,
+        None => {
+            let id = generate_session_id();
+            // Create an empty session file so subsequent reloads find it
+            touch_session(&id);
+            id
+        }
+    };
 
     let mut username = if method.eq_ignore_ascii_case("POST") {
         // Only update the stored username if a non-empty value was provided
@@ -100,8 +121,14 @@ fn main() {
     }
 
     println!("Cache-Control: no-cache");
-    // Always set cookie so the client updates it if we generated a new one or to refresh it like the Perl version
-    println!("Set-Cookie: {}={}; Path=/", COOKIE_NAME, session_id);
+    // Use cookie crate to build Set-Cookie header
+    let mut jar = CookieJar::new();
+    let mut c = Cookie::build(COOKIE_NAME, session_id.clone())
+        .path("/")
+        .finish();
+    jar.add(c.clone());
+    // The cookie jar isn't directly used to output; format the cookie
+    println!("Set-Cookie: {}", c.to_string());
     println!("Content-type: text/html\n");
 
     println!("<html><head><title>Rust Sessions</title></head><body>");
