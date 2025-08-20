@@ -20,7 +20,6 @@ func main() {
 		fmt.Fprint(w, `<p style="background-color: yellow;">William Widjaja</p><br />`)
 		fmt.Fprint(w, "<table>")
 
-		// Read protocol and method from environment
 		protocol := os.Getenv("SERVER_PROTOCOL")
 		if protocol == "" {
 			protocol = "(unknown)"

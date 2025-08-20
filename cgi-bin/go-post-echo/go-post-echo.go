@@ -21,14 +21,12 @@ func main() {
 		fmt.Fprint(w, `<body><h1 align="center">Post Message Body</h1><hr>`)
 		fmt.Fprint(w, `<p style="background-color: yellow;">William Widjaja</p><br />`)
 
-		// Read CONTENT_LENGTH from the environment
 		contentLengthStr := os.Getenv("CONTENT_LENGTH")
 		contentLength, err := strconv.Atoi(contentLengthStr)
 		if err != nil || contentLength <= 0 {
 			contentLength = 0
 		}
 
-		// Read POST body from stdin
 		var body string
 		if contentLength > 0 {
 			buf := make([]byte, contentLength)
@@ -37,14 +35,12 @@ func main() {
 			}
 		}
 
-		// Print raw message body
 		if strings.TrimSpace(body) == "" {
 			fmt.Fprint(w, "<b>Message Body:</b> (null)<br />\n")
 		} else {
 			fmt.Fprintf(w, "<b>Message Body:</b> %s<br />\n", template.HTMLEscapeString(body))
 		}
 
-		// Parse the body like a query string
 		params, err := url.ParseQuery(body)
 		if err != nil || len(params) == 0 {
 			fmt.Fprint(w, "<p><em>No form parameters were provided.</em></p>")
