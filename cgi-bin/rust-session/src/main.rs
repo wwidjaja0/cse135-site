@@ -36,6 +36,10 @@ fn get_session_file_path(session_id: &str) -> PathBuf {
     path
 }
 
+fn session_exists(session_id: &str) -> bool {
+    get_session_file_path(session_id).exists()
+}
+
 fn read_session_username(session_id: &str) -> Option<String> {
     let path = get_session_file_path(session_id);
     fs::read_to_string(path)
@@ -70,15 +74,14 @@ fn parse_username_from_post() -> Option<String> {
 
 fn main() {
     let method = env::var("REQUEST_METHOD").unwrap_or_default();
-    let session_id = env::var("HTTP_COOKIE")
-        .ok()
-        .and_then(|c| get_cookie_value(&c, COOKIE_NAME))
-        .unwrap_or_else(generate_session_id);
 
-    let is_new_session = env::var("HTTP_COOKIE")
-        .ok()
-        .and_then(|c| get_cookie_value(&c, COOKIE_NAME))
-        .is_none();
+    // Determine session id: if cookie present and valid (file exists), use it; otherwise generate new
+    let raw_cookie = env::var("HTTP_COOKIE").ok();
+    let mut session_id = raw_cookie
+        .as_deref()
+        .and_then(|c| get_cookie_value(c, COOKIE_NAME))
+        .filter(|id| session_exists(id))
+        .unwrap_or_else(generate_session_id);
 
     let mut username = if method.eq_ignore_ascii_case("POST") {
         // Only update the stored username if a non-empty value was provided
@@ -97,9 +100,8 @@ fn main() {
     }
 
     println!("Cache-Control: no-cache");
-    if is_new_session {
-        println!("Set-Cookie: {}={}; Path=/", COOKIE_NAME, session_id);
-    }
+    // Always set cookie so the client updates it if we generated a new one or to refresh it like the Perl version
+    println!("Set-Cookie: {}={}; Path=/", COOKIE_NAME, session_id);
     println!("Content-type: text/html\n");
 
     println!("<html><head><title>Rust Sessions</title></head><body>");
