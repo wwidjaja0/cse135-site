@@ -71,7 +71,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 	saveSession(sid, session)
 
-	fmt.Fprint(w, "Content-type: text/html\n\n")
+	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprint(w, "<html>")
 	fmt.Fprint(w, "<head><title>Go Sessions</title></head>")
 	fmt.Fprint(w, "<body>")
