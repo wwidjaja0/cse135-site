@@ -119,7 +119,7 @@ Rust
 - <https://cse135-wwidjaja.online/cgi-bin/rust-env.cgi>
 - <https://cse135-wwidjaja.online/cgi-bin/rust-get-echo.cgi>
 - <https://cse135-wwidjaja.online/cgi-bin/rust-post-echo.cgi>
-- <https://cse135-wwidjaja.online/cgi-bin/rust-general-echo.cgi>
+- <https://cse135-wwidjaja.online/cgi-bin/rust-general-request-echo.cgi>
 - <https://cse135-wwidjaja.online/hw2/rust-cgiform.html>
 
 Go
@@ -129,7 +129,7 @@ Go
 - <https://cse135-wwidjaja.online/cgi-bin/go-env.cgi>
 - <https://cse135-wwidjaja.online/cgi-bin/go-get-echo.cgi>
 - <https://cse135-wwidjaja.online/cgi-bin/go-post-echo.cgi>
-- <https://cse135-wwidjaja.online/cgi-bin/go-general-echo.cgi>
+- <https://cse135-wwidjaja.online/cgi-bin/go-general-request-echo.cgi>
 - <https://cse135-wwidjaja.online/hw2/go-cgiform.html>
 
 Additional Notes:
