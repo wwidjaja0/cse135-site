@@ -6,7 +6,7 @@ use std::{
 };
 use rand::{distributions::Alphanumeric, Rng};
 use urlencoding::decode;
-use cookie::{Cookie, CookieJar, ParseError};
+use cookie::Cookie;
 
 const SESSION_DIR: &str = "/tmp";
 const COOKIE_NAME: &str = "CGISESSID";
@@ -95,7 +95,11 @@ fn main() {
         .filter(|s| !s.is_empty() && s != "destroyed");
 
     let session_id = match cookie_id {
-        Some(id) => id,
+        Some(id) => {
+            // Ensure a session file exists for existing cookie-based sessions
+            touch_session(&id);
+            id
+        }
         None => {
             let id = generate_session_id();
             // Create an empty session file so subsequent reloads find it
@@ -122,12 +126,9 @@ fn main() {
 
     println!("Cache-Control: no-cache");
     // Use cookie crate to build Set-Cookie header
-    let mut jar = CookieJar::new();
-    let mut c = Cookie::build(COOKIE_NAME, session_id.clone())
+    let c = Cookie::build(Cookie::new(COOKIE_NAME, session_id.clone()))
         .path("/")
-        .finish();
-    jar.add(c.clone());
-    // The cookie jar isn't directly used to output; format the cookie
+        .build();
     println!("Set-Cookie: {}", c.to_string());
     println!("Content-type: text/html\n");
 
